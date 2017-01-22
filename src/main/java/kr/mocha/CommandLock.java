@@ -4,19 +4,24 @@ import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerCommandPreprocessEvent;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
 import kr.mocha.command.CommandLockCommand;
+
+import java.io.File;
 
 /**
  * Created by mocha on 16. 11. 16.
  */
 public class CommandLock extends PluginBase implements Listener{
     public static CommandLock instance;
+    public Config config;
 
     @Override
     public void onEnable() {
         instance = this;
         getDataFolder().mkdirs();
+        config = new Config(getDataFolder()+ File.separator+"config.yml", Config.YAML);
         this.getServer().getPluginManager().registerEvents(this, this);
         this.getServer().getCommandMap().register("commandlock", new CommandLockCommand());
         super.onEnable();
@@ -24,7 +29,7 @@ public class CommandLock extends PluginBase implements Listener{
 
     @Override
     public void onDisable() {
-        this.save();
+        config.save();
         super.onDisable();
     }
 
@@ -34,19 +39,15 @@ public class CommandLock extends PluginBase implements Listener{
         String command = event.getMessage();
 
         getConfig().getKeys().forEach(s -> {
-            if(command.contains(s)){
+            if(command.startsWith(s)){
                 event.setCancelled();
                 event.getPlayer().sendMessage(TextFormat.RED+"this command is locked!");
             }
         });
     }
 
-    /*utils*/
-    public void save(){
-        getConfig().save();
-    }
-
     public static CommandLock getInstance(){
         return instance;
     }
+
 }

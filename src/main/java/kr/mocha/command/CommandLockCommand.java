@@ -11,7 +11,7 @@ import kr.mocha.CommandLock;
  * Created by mocha on 16. 11. 16.
  */
 public class CommandLockCommand extends Command{
-    public Config config = CommandLock.getInstance().getConfig();
+    public Config config = CommandLock.getInstance().config;
 
     public CommandLockCommand(){
         super("commandlock", "Lock commands", "/commandlock <add|del|list>", new String[]{"cmdlock"});

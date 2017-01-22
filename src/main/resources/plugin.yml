@@ -1,6 +1,6 @@
 name : CommandLock
 main : kr.mocha.CommandLock
-version : 1.0-SNAPSHOT
+version : 1.1-SNAPSHOT
 author : mocha
 description : "Lock Commands!"
 api : [1.0.0]
